@@ -1,0 +1,66 @@
+
+/*
+    +----------------------------------------------------------------+
+    | WinampOutputMonitor                                            |
+    | Copyright (c) 2015 Syed Azhar.                                 |
+    | All Rights Reserved.                                           |
+    +----------------------------------------------------------------+
+    
+    +----------------------------------------------------------------+
+    | Settings.txt                                                   |
+    +----------------------------------------------------------------+
+*/
+
+
+=====================================
+WinampOutputBypass Compiler Settings:
+=====================================
+
+------------------------------
+Solution Configuration : Debug
+------------------------------
+
+Configuration Properties -> General -> Target Name:
+Old -> $(ProjectName)
+New -> out_$(ProjectName)
+
+Configuration Properties -> General -> CLR Support:
+Old -> No CLR Support
+New -> CLR Support (/clr)
+
+Configuration Properties -> Debugging -> Command:
+Old -> $(TargetPath)
+New -> C:\Program Files (x86)\Winamp\winamp.exe
+
+C/C++ -> Code Generation -> Runtime Library:
+Old -> Multi-threaded Debug DLL (/MDd)
+New -> Same as Old. Multi-threaded Debug (/MTd) is not compatible /CLR
+
+Configuration Properties -> Build Events -> Post-Build Event -> Command Line
+Old -> 
+New -> copy "$(OutDir)$(TargetFileName)" "C:\Program Files (x86)\Winamp\Plugins\$(TargetFileName)"
+
+
+--------------------------------
+Solution Configuration : Release
+--------------------------------
+
+
+
+=======================
+Visual Studio Settings:
+=======================
+
+Tools -> Options -> Debugging:
+    Enable: Use Managed Compatibility Mode
+
+
+
+===============
+Other Settings:
+===============
+
+Add Target Framework for Interop Dll:
+  <PropertyGroup Label="Globals">
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+  </PropertyGroup>

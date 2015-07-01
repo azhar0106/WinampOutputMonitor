@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Winamp">
+      <UniqueIdentifier>{bef0f6f4-fe97-46ad-acfb-7a655c1825e0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BypassOutputModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BypassOutputModule.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Winamp\DSP.H">
+      <Filter>Source Files\Winamp</Filter>
+    </ClInclude>
+    <ClInclude Include="Winamp\GEN.H">
+      <Filter>Source Files\Winamp</Filter>
+    </ClInclude>
+    <ClInclude Include="Winamp\IN2.H">
+      <Filter>Source Files\Winamp</Filter>
+    </ClInclude>
+    <ClInclude Include="Winamp\ipc_pe.h">
+      <Filter>Source Files\Winamp</Filter>
+    </ClInclude>
+    <ClInclude Include="Winamp\OUT.H">
+      <Filter>Source Files\Winamp</Filter>
+    </ClInclude>
+    <ClInclude Include="Winamp\wa_dlg.h">
+      <Filter>Source Files\Winamp</Filter>
+    </ClInclude>
+    <ClInclude Include="Winamp\wa_ipc.h">
+      <Filter>Source Files\Winamp</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
