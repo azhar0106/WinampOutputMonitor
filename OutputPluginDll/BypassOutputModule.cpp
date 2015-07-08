@@ -19,18 +19,18 @@
 #include <Windows.h>
 
 
-using namespace OutputPluginManagedDll;
+//using namespace OutputPluginManagedDll;
 
 
 namespace WinampOutputBypass
 {
     namespace BypassOutputModule
     {
-		public ref class ManagedGlobals abstract sealed
+		/*public ref class ManagedGlobals abstract sealed
 		{
 		public:
 			static ManagedOutputModule^ managedOutputModule = gcnew ManagedOutputModule();
-		};
+		};*/
 
 		
         int outputModuleId;     // This one is filled in by Winamp
@@ -98,13 +98,13 @@ namespace WinampOutputBypass
         void	Init()
         {
             ExternalPlugin::LoadExternalOutput();
-			ManagedGlobals::managedOutputModule->Init();
+			//ManagedGlobals::managedOutputModule->Init();
             ExternalPlugin::pointerToInit();
         }
         void	Quit()
         {
             ExternalPlugin::pointerToQuit();
-			ManagedGlobals::managedOutputModule->Quit();
+			//ManagedGlobals::managedOutputModule->Quit();
             ExternalPlugin::UnloadExternalOutput();
         }
         int		Open(int samplerate, int numchannels, int bitspersamp, int bufferlenms, int prebufferms)
@@ -375,6 +375,76 @@ namespace WinampOutputBypass
         }//ExternalPlugin
     }//BypassOutputModule
 
+	namespace BypassOutputModule
+	{
+		namespace InteropDll
+		{
+			HMODULE     handleToInteropDll = 0;
+			Out_Module* (*pointerToExportedFunction)() = 0;
+			char        *filenameOfInteropDll = 0;
+
+			int     LoadExternalOutput()
+			{
+				int returnValue = 0;
+
+
+
+				returnValue = FillFilenameOfInteropDll();
+				if (!returnValue)
+				{
+					return 0;
+				}
+
+
+				handleToInteropDll = LoadLibraryA(filenameOfInteropDll);
+				if (!handleToInteropDll)
+				{
+					MessageBox(0, L"External Output Dll could not be loaded.", WinampOutputBypass::Constants::pluginNameWide, MB_OK);
+					return 0;
+				}
+
+				pointerToExportedFunction = (Out_Module*(*)())GetProcAddress(handleToInteropDll, "Init");
+				if (!pointerToExportedFunction)
+				{
+					MessageBox(0, L"Could not get exported function.", WinampOutputBypass::Constants::pluginNameWide, MB_OK);
+					return 0;
+				}
+
+
+				return 1;
+			}
+			int     FillFilenameOfInteropDll()
+			{
+				char* pluginDirectory = 0;
+				int bufferLength = 0;
+
+
+				pluginDirectory = (char*)SendMessage(WinampOutputBypass::BypassOutputModule::out.hMainWindow, WM_WA_IPC, 0, IPC_GETPLUGINDIRECTORY);
+				if (!pluginDirectory)
+				{
+					MessageBox(0, L"Winamp did not return plug-in directory location.", WinampOutputBypass::Constants::pluginNameWide, MB_OK);
+					return 0;
+				}
+
+
+				bufferLength = strlen(pluginDirectory) + 1 + strlen(WinampOutputBypass::Constants::externalOutputPluginName) + 1;
+				filenameOfInteropDll = new char[bufferLength];
+				if (!filenameOfInteropDll)
+				{
+					MessageBox(0, L"Could not allocate memory to store plug-in name.", WinampOutputBypass::Constants::pluginNameWide, MB_OK);
+					return 0;
+				}
+
+
+				strcpy_s(filenameOfInteropDll, bufferLength, pluginDirectory);
+				strcat_s(filenameOfInteropDll, bufferLength, "\\");
+				strcat_s(filenameOfInteropDll, bufferLength, WinampOutputBypass::Constants::interopDllName);
+
+
+				return 1;
+			}
+		}
+	}
 }//WinampOutputBypass
 
 

@@ -72,6 +72,12 @@ namespace WinampOutputBypass
             int     UnloadExternalOutput();
             int     FillFilenameOfExternalOutputDll();
         }
+
+		namespace InteropDll
+		{
+			int     LoadExternalOutput();
+			int     FillFilenameOfInteropDll();
+		}
     }
 
 }

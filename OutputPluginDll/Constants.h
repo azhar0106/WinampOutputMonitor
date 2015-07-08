@@ -27,6 +27,7 @@ namespace WinampOutputBypass
         static const wchar_t*   copyrightNotice  = L"Copyright (c) 2015 Syed Azhar.\nAll rights reserved.";
 
         static const char*      externalOutputPluginName = "out_ds.dll";
+		static const char*      interopDllName = "OutputPluginInteropDll.dll";
     }
 }
 
